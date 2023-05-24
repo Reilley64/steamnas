@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:15
+    ports:
+      - 10000:5432
+    environment:
+      - POSTGRES_USER=$DATABASE_USERNAME
+      - POSTGRES_PASSWORD=$DATABASE_PASSWORD
+
+  steamnas:
+    build: ./be
+    ports:
+      - 10100:80
+    environment:
+      - DATABASE_URL=postgresql://$DATABASE_USERNAME:$DATABASE_PASSWORD@postgres:5432/$DATABASE_USERNAME
+      - STEAM_USERNAME=$STEAM_USERNAME
+      - STEAM_PASSWORD=$STEAM_PASSWORD
+    volumes:
+      - $GAMES_ROOT:/root/Steam/steamapps
+    depends_on:
+      - postgres
