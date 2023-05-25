@@ -14,7 +14,8 @@ COPY *.py /app
 
 ENV DATABASE_URL=sqlite:///database.db
 
-RUN crontab -l | { cat; echo "0 4 * * * /usr/bin/python3 /app/update.py"; } | crontab -
+RUN echo "0 4 * * * /usr/bin/python3 /app/update.py" > /etc/cron.d/steamnas
+RUN crontab /etc/cron.d/steamnas
 RUN cron
 
 ENTRYPOINT ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
