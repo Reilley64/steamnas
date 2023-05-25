@@ -2,15 +2,12 @@ import Flex from "./components/Flex";
 import {createResource} from "solid-js";
 
 async function fetchInstalled() {
-  const response = await fetch("http://192.168.0.91:10100/installed", { mode: "no-cors", headers: { Accept: "application/json" } });
-  console.log(response);
+  const response = await fetch("http://192.168.0.91:10100/installed", { mode: "cors", headers: { Accept: "application/json" } });
   return response.json()
 }
 
 function App() {
   const [installed] = createResource(fetchInstalled);
-
-  console.log
 
   return (
     <Flex
