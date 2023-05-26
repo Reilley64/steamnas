@@ -1,6 +1,6 @@
-import {styled} from "emotion-solid";
-import {CSSObject} from "@emotion/serialize";
-import {JSX, ParentProps} from "solid-js";
+import { CSSObject } from "@emotion/serialize";
+import { styled } from "emotion-solid";
+import { JSX, ParentProps } from "solid-js";
 
 export type ElementType = keyof JSX.IntrinsicElements;
 

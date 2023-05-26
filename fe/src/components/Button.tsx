@@ -1,5 +1,5 @@
-import Flex, {FlexProps} from "./Flex";
-import {ElementType} from "./Element";
+import { ElementType } from "./Element";
+import Flex, { FlexProps } from "./Flex";
 
 export type ButtonProps<T extends ElementType = "button"> = FlexProps<T>;
 
@@ -31,7 +31,7 @@ function Button(props: ButtonProps) {
         ...props.sx,
       }}
     />
-  )
+  );
 }
 
 export default Button;
