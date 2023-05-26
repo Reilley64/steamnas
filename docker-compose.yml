@@ -27,4 +27,4 @@ services:
     ports:
       - 10200:80
     depends_on:
-      - fastapi
+      - spring
