@@ -9,12 +9,12 @@ services:
     volumes:
       - $DATABASE_ROOT:/var/lib/postgresql/data
 
-  fastapi:
+  spring:
     build: ./be
     ports:
       - 10100:80
     environment:
-      - DATABASE_URL=postgresql://$DATABASE_USERNAME:$DATABASE_PASSWORD@postgres:5432/$DATABASE_USERNAME
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://$DATABASE_USERNAME:$DATABASE_PASSWORD@postgres:5432/$DATABASE_USERNAME
       - STEAM_USERNAME=$STEAM_USERNAME
       - STEAM_PASSWORD=$STEAM_PASSWORD
     volumes:

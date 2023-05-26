@@ -1,14 +1,13 @@
+FROM gradle:8.1.1-jdk17 AS build
+WORKDIR /app
+COPY . .
+RUN gradle build --no-daemon
+
 FROM steamcmd/steamcmd:ubuntu
 
-RUN apt update
-RUN apt -y upgrade
-RUN apt -y install python3 python3-pip
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends openjdk-17-jdk && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install fastapi psycopg2-binary requests rocketry sqlalchemy uvicorn[standard] websockets
-
-WORKDIR /app
-COPY *.py /app
-
-ENV DATABASE_URL=sqlite:///database.db
-
-ENTRYPOINT ["python3", "main.py"]
+COPY --from=build /app/build/libs/*.jar app.jar
+ENTRYPOINT ["java", "-jar", "./app.jar"]
