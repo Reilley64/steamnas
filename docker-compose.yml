@@ -9,7 +9,7 @@ services:
     volumes:
       - $DATABASE_ROOT:/var/lib/postgresql/data
 
-  steamnas:
+  fastapi:
     build: ./be
     ports:
       - 10100:80
@@ -21,3 +21,10 @@ services:
       - $GAMES_ROOT:/root/Steam/steamapps
     depends_on:
       - postgres
+
+  solidjs:
+    build: ./fe
+    ports:
+      - 10200:80
+    depends_on:
+      - fastapi
