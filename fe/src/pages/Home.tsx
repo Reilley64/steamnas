@@ -3,7 +3,7 @@ import Grid from "../components/Grid";
 import Flex from "../components/Flex";
 
 async function fetchInstalled(): Promise<Array<{ id: string; name: string; image: string }>> {
-  const response = await fetch("http://localhost:8080/installed", { mode: "cors", headers: { Accept: "application/json" } });
+  const response = await fetch("http://192.168.0.91:10100/installed", { mode: "cors", headers: { Accept: "application/json" } });
   return response.json()
 }
 

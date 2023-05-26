@@ -5,7 +5,7 @@ import Flex from "../components/Flex";
 function Console() {
   const [messages, setMessages] = createSignal<Array<string>>([]);
 
-  const ws = createWS("ws://localhost:8080/ws");
+  const ws = createWS("ws://192.168.0.91:10100/ws");
 
   ws.onmessage = (event) => setMessages((prev) => [...prev, event.data]);
 
