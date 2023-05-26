@@ -1,12 +1,14 @@
-import {styled} from "emotion-solid";
 import {ParentProps} from "solid-js";
-import {CSSProperties} from "@emotion/serialize";
+import {CSSObject} from "@emotion/serialize";
+import Element, {ElementProps, ElementType} from "./Element";
 
-export type FlexProps = ParentProps<{ sx?: CSSProperties }>;
+export type FlexProps<T extends ElementType = ElementType> = ParentProps<{
+  as?: T;
+  sx?: CSSObject;
+}> & ElementProps<T>;
 
-const Flex = styled("div")<FlexProps>((props) => ({
-  display: "flex",
-  ...props.sx,
-}));
+function Flex(props: FlexProps) {
+  return <Element {...props} as={props.as || "div"} children={props.children} sx={{ display: "flex", ...props.sx }} />;
+}
 
 export default Flex;

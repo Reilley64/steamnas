@@ -1,56 +1,23 @@
-from fastapi import BackgroundTasks, Depends, FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from run_command import run_command
-import database
-import models
-from sqlalchemy.orm import Session
-import requests
-
-app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-models.Base.metadata.create_all(bind=database.engine)
+import asyncio
+import uvicorn
+from api import app as app_fastapi
+from scheduler import app as app_rocketry
 
 
-def get_db():
-    db = database.SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+class Server(uvicorn.Server):
+    def handle_exit(self, sig: int, frame) -> None:
+        app_rocketry.session.shut_down()
+        return super().handle_exit(sig, frame)
 
 
-@app.get("/installed")
-def installed(db: Session = Depends(get_db)):
-    return db.query(models.App).all()
+async def main():
+    server = Server(config=uvicorn.Config(app_fastapi, host="0.0.0.0", port=80, workers=1, loop="asyncio"))
+
+    api = asyncio.create_task(server.serve())
+    sched = asyncio.create_task(app_rocketry.serve())
+
+    await asyncio.wait([sched, api])
 
 
-@app.post("/install/{app_id}")
-def install(app_id: str, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
-    response = requests.get(f"http://store.steampowered.com/api/appdetails/?appids={app_id}")
-    response = response.json()
-
-    create = models.App(id=app_id, name=response[app_id]["data"]["name"], image=response[app_id]["data"]["header_image"])
-    db.add(create)
-    db.commit()
-    db.refresh(create)
-
-    background_tasks.add_task(run_command, [f"+app_update {app_id} validate"])
-
-    return create
-
-
-@app.delete("/uninstall/{app_id}")
-def uninstall(app_id: str, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
-    db.query(models.App).filter(models.App.id == app_id).first().delete()
-
-    background_tasks.add_task(run_command, [f"+app_uninstall {app_id}"])
-
-    return 200
+if __name__ == "__main__":
+    asyncio.run(main())
