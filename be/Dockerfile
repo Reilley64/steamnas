@@ -1,13 +1,15 @@
-FROM gradle:7.6.1-jdk17 AS build
+FROM --platform=linux/amd64 gradle:8.1.1-jdk17 AS build
 WORKDIR /app
 COPY . .
-RUN gradle build --no-daemon
+RUN gradle bootJar --no-daemon
 
-FROM steamcmd/steamcmd:ubuntu
+FROM --platform=linux/amd64 steamcmd/steamcmd:ubuntu
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends openjdk-17-jdk && \
     rm -rf /var/lib/apt/lists/*
 
-COPY --from=build /app/build/libs/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "./app.jar"]
+WORKDIR /app
+
+COPY --from=build /app/build/libs/steamnas-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
