@@ -1,13 +1,13 @@
-FROM --platform=linux/amd64 gradle:8.1.1-jdk17 AS build
+FROM gradle:8.1.1-jdk17 AS build
 WORKDIR /app
 
 COPY build.gradle settings.gradle ./
-RUN gradle resolveDependencies
+RUN gradle clean
 
 COPY . .
 RUN gradle bootJar
 
-FROM --platform=linux/amd64 steamcmd/steamcmd:ubuntu
+FROM steamcmd/steamcmd:ubuntu
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends openjdk-17-jdk && \
