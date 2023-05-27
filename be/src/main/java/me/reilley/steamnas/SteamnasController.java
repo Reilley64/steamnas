@@ -3,7 +3,6 @@ package me.reilley.steamnas;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import me.reilley.steamnas.ext.steam.SteamFeignClient;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.stream.IntStream;
 
 @AllArgsConstructor
 
-@Controller
+@RestController
 @CrossOrigin(origins = "*")
 public class SteamnasController {
     private final AppRepository appRepository;
