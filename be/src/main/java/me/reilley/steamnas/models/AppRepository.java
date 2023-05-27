@@ -1,4 +1,4 @@
-package me.reilley.steamnas;
+package me.reilley.steamnas.models;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

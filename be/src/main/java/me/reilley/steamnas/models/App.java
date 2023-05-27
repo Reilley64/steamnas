@@ -1,4 +1,4 @@
-package me.reilley.steamnas;
+package me.reilley.steamnas.models;
 
 import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import jakarta.persistence.Column;

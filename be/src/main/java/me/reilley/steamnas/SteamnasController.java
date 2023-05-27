@@ -3,6 +3,8 @@ package me.reilley.steamnas;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import me.reilley.steamnas.ext.steam.SteamFeignClient;
+import me.reilley.steamnas.models.App;
+import me.reilley.steamnas.models.AppRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

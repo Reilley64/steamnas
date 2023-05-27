@@ -1,13 +1,15 @@
 package me.reilley.steamnas;
 
 import lombok.AllArgsConstructor;
+import me.reilley.steamnas.models.App;
+import me.reilley.steamnas.models.AppRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 
 @Service
-public class SchedulerService {
+public class SteamnasSchedulerService {
     final SteamnasService steamnasService;
     final AppRepository appRepository;
 
