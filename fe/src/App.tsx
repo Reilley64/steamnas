@@ -32,7 +32,7 @@ function App() {
       <Flex
         sx={{
           flexDirection: "column",
-          minHeight: "100vh",
+          minHeight: "calc(100vh - 56px)",
           minWidth: "100vw",
           padding: "2rem",
         }}
