@@ -3,6 +3,3 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-  datasource:
-    username: steamnas
-    password: darkrai12
