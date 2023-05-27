@@ -1,6 +1,7 @@
 import Flex from "../components/Flex";
 import { Stomp } from "@stomp/stompjs";
 import { For, createEffect, createSignal } from "solid-js";
+import Text from "../components/Text";
 
 function Console() {
   const [messages, setMessages] = createSignal<Array<string>>([]);
@@ -10,7 +11,7 @@ function Console() {
 
     stompClient.connect({}, () => {
       stompClient.subscribe("/topic/console", (message) => {
-        setMessages((messages) => [...messages, message.body]);
+        setMessages((prev) => [...prev, message.body]);
       });
     });
 
@@ -23,10 +24,10 @@ function Console() {
     <Flex
       sx={{ backgroundColor: "black", borderRadius: "10px", color: "white", fontSize: "0.875rem", padding: "1rem" }}
     >
-      <pre style={{ display: "flex", "flex-direction": "column" }}>
-        <span style={{ animation: "slow-blink 1.25s step-end infinite" }}>_</span>
-        <For each={messages().reverse()}>{(message) => <span>{message}</span>}</For>
-      </pre>
+      <Text as="pre" style={{ display: "flex", "flex-direction": "column" }}>
+        <Text sx={{ animation: "slow-blink 1.25s step-end infinite" }}>_</Text>
+        <For each={messages().reverse()}>{(message) => <Text>{message}</Text>}</For>
+      </Text>
     </Flex>
   );
 }

@@ -4,6 +4,7 @@ import HomePage from "./pages/Home";
 import "@fortawesome/fontawesome-free/css/fontawesome.css";
 import "@fortawesome/fontawesome-free/css/solid.css";
 import { Link, Route, Routes } from "@solidjs/router";
+import Text from "./components/Text";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
           top: 0,
         }}
       >
-        <header style={{ color: "white", "font-weight": 700 }}>SteamNAS</header>
+        <Text sx={{ color: "white", fontWeight: 700 }}>SteamNAS</Text>
 
         <Link href="/console" style={{ color: "white" }}>
           <i class="fa-solid fa-terminal" />

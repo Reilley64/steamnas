@@ -30,7 +30,7 @@ public class SteamnasService {
                     "+@NoPromptForPassword 1",
                     "+@sSteamCmdForcePlatformType windows",
                     String.format("+login %s %s", System.getenv("STEAM_USERNAME"), System.getenv("STEAM_PASSWORD")),
-                    Arrays.stream(apps).map((app) -> String.format("+app_update %s", app.getId())).collect(Collectors.joining()),
+                    Arrays.stream(apps).map((app) -> String.format("+app_update %s verify", app.getId())).collect(Collectors.joining()),
                     "+quit"
             );
             try {

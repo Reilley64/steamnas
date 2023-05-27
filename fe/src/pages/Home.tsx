@@ -1,8 +1,9 @@
 import Flex from "../components/Flex";
 import Grid from "../components/Grid";
 import { For, createResource } from "solid-js";
+import Text from "../components/Text";
 
-async function fetchInstalled(): Promise<Array<{ id: string; name: string; image: string }>> {
+async function fetchInstalled(): Promise<Array<{ id: string; name: string; developers: Array<string>, image: string }>> {
   const response = await fetch("http://192.168.0.91:10100/installed", {
     mode: "cors",
     headers: { Accept: "application/json" },
@@ -27,18 +28,29 @@ function Home() {
             }}
           >
             <img alt={app.name} src={app.image} style={{ height: "auto", width: "100%" }} />
-            <Flex sx={{ padding: "1rem" }}>
-              <header
-                style={{
+            <Flex sx={{ flexDirection: "column", padding: "1rem" }}>
+              <Text
+                sx={{
                   color: "white",
-                  "font-weight": 600,
+                  fontWeight: 600,
                   overflow: "hidden",
-                  "text-overflow": "ellipsis",
-                  "white-space": "nowrap",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
                 }}
               >
                 {app.name}
-              </header>
+              </Text>
+              <Text
+                sx={{
+                  color: "rgb(178, 186, 194)",
+                  fontSize: "0.875rem",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {app.developers.join(" • ")}
+              </Text>
             </Flex>
           </Flex>
         )}
