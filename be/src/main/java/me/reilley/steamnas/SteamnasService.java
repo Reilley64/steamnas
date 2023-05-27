@@ -22,6 +22,8 @@ public class SteamnasService {
         taskExecutor.execute(() -> {
             ProcessBuilder pb = new ProcessBuilder(
                     "steamcmd",
+                    "+@NoPromptForPassword 1",
+                    "+@sSteamCmdForcePlatformType windows",
                     String.format("+login %s %s", System.getenv("STEAM_USERNAME"), System.getenv("STEAM_PASSWORD")),
                     Arrays.stream(apps).map((app) -> String.format("+app_update %s", app.getId())).collect(Collectors.joining()),
                     "+quit"
