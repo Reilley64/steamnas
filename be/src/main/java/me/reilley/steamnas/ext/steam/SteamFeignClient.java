@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "steam", url = "https://store.steampowered.com/api")
 public interface SteamFeignClient {
-    @GetMapping("/appdetails")
+    @GetMapping("/appdetails?l=english")
     JsonNode getAppDetails(@RequestParam("appids") String appids);
 }
