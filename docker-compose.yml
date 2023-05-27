@@ -11,6 +11,7 @@ services:
 
   spring:
     build: ./be
+    pull_policy: build
     ports:
       - 10100:8080
     environment:
@@ -26,6 +27,7 @@ services:
 
   solidjs:
     build: ./fe
+    pull_policy: build
     ports:
       - 10200:80
     depends_on:
