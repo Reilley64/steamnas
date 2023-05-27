@@ -3,7 +3,6 @@ package me.reilley.steamnas;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import me.reilley.steamnas.ext.steam.SteamFeignClient;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
