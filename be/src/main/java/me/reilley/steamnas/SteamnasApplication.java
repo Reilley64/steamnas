@@ -2,14 +2,10 @@ package me.reilley.steamnas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@EnableAsync
-@EnableFeignClients
-@EnableScheduling
+@Import({SteamnasAppConfig.class, SteamnasWebSocketConfig.class})
 public class SteamnasApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SteamnasApplication.class, args);
