@@ -10,6 +10,9 @@ dependencies:
   '@solidjs/router':
     specifier: ^0.8.2
     version: 0.8.2(solid-js@1.7.5)
+  '@stomp/stompjs':
+    specifier: ^7.0.0
+    version: 7.0.0
   emotion-solid:
     specifier: ^1.1.1
     version: 1.1.1(solid-js@1.7.5)
@@ -24,6 +27,9 @@ dependencies:
     version: 8.13.0
 
 devDependencies:
+  '@types/sockjs-client':
+    specifier: ^1.5.1
+    version: 1.5.1
   rome:
     specifier: 12.1.2
     version: 12.1.2
@@ -725,6 +731,10 @@ packages:
       solid-js: 1.7.5
     dev: false
 
+  /@stomp/stompjs@7.0.0:
+    resolution: {integrity: sha512-fGdq4wPDnSV/KyOsjq4P+zLc8MFWC3lMmP5FBgLWKPJTYcuCbAIrnRGjB7q2jHZdYCOD5vxLuFoKIYLy5/u8Pw==}
+    dev: false
+
   /@types/babel__core@7.20.0:
     resolution: {integrity: sha512-+n8dL/9GWblDO0iU6eZAwEIJVr5DWigtle+Q6HLOrh/pdbXOhOtqzq8VPPE2zvNJzSKY4vH/z3iT3tn0A3ypiQ==}
     dependencies:
@@ -752,6 +762,10 @@ packages:
     resolution: {integrity: sha512-enCvTL8m/EHS/zIvJno9nE+ndYPh1/oNFzRYRmtUqJICG2VnCSBzMLW5VN2KCQU91f23tsNKR8v7VJJQMatl7Q==}
     dependencies:
       '@babel/types': 7.21.5
+    dev: true
+
+  /@types/sockjs-client@1.5.1:
+    resolution: {integrity: sha512-bmZM6A1GPdjF0bcuIUC+50hZEMGkzMsiG9by6X9U+7IZFOiPtz7MJ9h05FSpPVxlj4i+TzzoG3ESo1FJlbLb6A==}
     dev: true
 
   /ansi-styles@3.2.1:
