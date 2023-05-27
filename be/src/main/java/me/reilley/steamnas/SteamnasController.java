@@ -3,6 +3,8 @@ package me.reilley.steamnas;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import me.reilley.steamnas.ext.steam.SteamFeignClient;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.stream.IntStream;
 
 @AllArgsConstructor
 
-@RestController
+@Controller
 @CrossOrigin(origins = "*")
 public class SteamnasController {
     private final AppRepository appRepository;
@@ -22,7 +24,7 @@ public class SteamnasController {
 
     @GetMapping("/installed")
     List<App> installed() {
-        return appRepository.findAll();
+        return appRepository.findAllByOrderByName();
     }
 
     @PostMapping("/install/{appId}")

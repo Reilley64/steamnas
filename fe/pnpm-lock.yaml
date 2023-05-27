@@ -7,9 +7,6 @@ dependencies:
   '@fortawesome/fontawesome-free':
     specifier: ^6.4.0
     version: 6.4.0
-  '@solid-primitives/websocket':
-    specifier: ^1.1.0
-    version: 1.1.0(solid-js@1.7.5)
   '@solidjs/router':
     specifier: ^0.8.2
     version: 0.8.2(solid-js@1.7.5)
@@ -719,14 +716,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /@solid-primitives/websocket@1.1.0(solid-js@1.7.5):
-    resolution: {integrity: sha512-4GLsJsusG4qh5TT/SqPLO7fqUoAXMOspaSls4MFtdzpbfNI/QQSOzSnrTl84wgzu/HdNe68Ho2mvCWLdy/mFtA==}
-    peerDependencies:
-      solid-js: ^1.6.12
-    dependencies:
-      solid-js: 1.7.5
-    dev: false
 
   /@solidjs/router@0.8.2(solid-js@1.7.5):
     resolution: {integrity: sha512-gUKW+LZqxtX6y/Aw6JKyy4gQ9E7dLqp513oB9pSYJR1HM5c56Pf7eijzyXX+b3WuXig18Cxqah4tMtF0YGu80w==}

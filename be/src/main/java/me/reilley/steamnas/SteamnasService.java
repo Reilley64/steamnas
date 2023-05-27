@@ -2,6 +2,7 @@ package me.reilley.steamnas;
 
 import lombok.AllArgsConstructor;
 import org.springframework.core.task.AsyncTaskExecutor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -15,8 +16,8 @@ import java.util.stream.Collectors;
 @Service
 public class SteamnasService {
     private final AsyncTaskExecutor taskExecutor;
-
     private final AppRepository appRepository;
+    private final SimpMessagingTemplate simpleMessagingTemplate;
 
     void update(App... apps) {
         taskExecutor.execute(() -> {
@@ -33,6 +34,7 @@ public class SteamnasService {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
                 String line;
                 while ((line = reader.readLine()) != null) {
+                    simpleMessagingTemplate.convertAndSend("/topic/console", line);
                     System.out.println(line);
                 }
 
