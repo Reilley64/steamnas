@@ -5,7 +5,7 @@ function Console() {
   const [messages, setMessages] = createSignal<Array<string>>([]);
 
   createEffect(() => {
-    const socket = new WebSocket("ws://192.168.0.91:10100/ws");
+    const socket = new WebSocket("ws://192.168.0.91:10100/ws/topic/console");
     socket.onmessage = (event) => setMessages((prev) => [...prev, event.data]);
 
     return () => {
