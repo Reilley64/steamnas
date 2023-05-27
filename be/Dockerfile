@@ -1,7 +1,11 @@
 FROM --platform=linux/amd64 gradle:8.1.1-jdk17 AS build
 WORKDIR /app
+
+COPY build.gradle settings.gradle ./
+RUN gradle resolveDependencies
+
 COPY . .
-RUN gradle bootJar --no-daemon
+RUN gradle bootJar
 
 FROM --platform=linux/amd64 steamcmd/steamcmd:ubuntu
 
