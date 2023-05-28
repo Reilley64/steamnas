@@ -22,39 +22,51 @@ function App() {
             <Flex sx={{ flexDir: "column" }}>
               <Flex
                 sx={{
-                  alignItems: "center",
                   bgColor: "rgba(10, 25, 41, 0.7)",
                   backdropFilter: "blur(8px)",
                   boxShadow: "rgb(19, 47, 76) 0px -1px 1px 0px inset",
+                  flexDir: "column",
                   h: "56px",
-                  justifyContent: "space-between",
-                  px: 8,
                   position: "sticky",
                   top: 0,
                   zIndex: 1,
                 }}
               >
-                <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-                  <Text sx={{ fontWeight: 700 }}>SteamNAS</Text>
-                </Link>
-
-                <HStack spacing={8}>
-                  <SearchForm />
-
-                  <Link to="/console" style={{ color: "white" }}>
-                    <Box>
-                      <FontAwesomeIcon icon={faTerminal} />
-                    </Box>
+                <Flex
+                  sx={{
+                    alignItems: "center",
+                    flexGrow: 1,
+                    justifyContent: "space-between",
+                    m: "auto",
+                    maxW: "1800px",
+                    px: 8,
+                    w: "100%",
+                  }}
+                >
+                  <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+                    <Text sx={{ fontWeight: 700 }}>SteamNAS</Text>
                   </Link>
-                </HStack>
+
+                  <HStack spacing={8}>
+                    <SearchForm />
+
+                    <Link to="/console" style={{ color: "white" }}>
+                      <Box>
+                        <FontAwesomeIcon icon={faTerminal} />
+                      </Box>
+                    </Link>
+                  </HStack>
+                </Flex>
               </Flex>
 
               <Flex
                 sx={{
                   flexDir: "column",
+                  m: "auto",
+                  maxW: "1800px",
                   minH: "calc(100vh - 56px)",
-                  minW: "100vw",
                   p: "2rem",
+                  w: "100%",
                 }}
               >
                 <Outlet />
