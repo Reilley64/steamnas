@@ -12,12 +12,12 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import {
-  faBasketball,
   faBuilding,
   faCar,
   faComputer,
   faCouch,
   faDragon,
+  faFootball,
   faGlasses,
   faGun,
   faPersonHiking,
@@ -38,7 +38,7 @@ const genreMap = new Map([
   ["Racing", <FontAwesomeIcon icon={faCar} fixedWidth />],
   ["RPG", <FontAwesomeIcon icon={faDragon} fixedWidth />],
   ["Simulation", <FontAwesomeIcon icon={faComputer} fixedWidth />],
-  ["Sports", <FontAwesomeIcon icon={faBasketball} fixedWidth />],
+  ["Sports", <FontAwesomeIcon icon={faFootball} fixedWidth />],
 ]);
 
 const context = createContext<[string | null, Dispatch<SetStateAction<string | null>>] | undefined>(undefined);
