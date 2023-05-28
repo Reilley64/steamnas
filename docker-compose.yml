@@ -25,7 +25,7 @@ services:
     depends_on:
       - postgres
 
-  solidjs:
+  react:
     build: fe-old
     pull_policy: build
     ports:
