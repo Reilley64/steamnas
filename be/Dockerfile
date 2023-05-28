@@ -9,8 +9,11 @@ RUN gradle bootJar
 
 FROM steamcmd/steamcmd:ubuntu
 
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/New_York
+
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends openjdk-17-jdk && \
+    apt-get install -y --no-install-recommends openjdk-17-jdk tzdata && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
