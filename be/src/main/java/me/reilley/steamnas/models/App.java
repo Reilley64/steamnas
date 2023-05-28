@@ -36,4 +36,6 @@ public class App {
     private List<String> publishers = new ArrayList<>();
 
     private String image;
+
+    private transient boolean installed;
 }

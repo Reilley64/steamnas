@@ -1,12 +1,11 @@
-import Flex from "../components/Flex";
+import { Flex, Text } from "@chakra-ui/react";
 import { Stomp } from "@stomp/stompjs";
-import { For, createEffect, createSignal } from "solid-js";
-import Text from "../components/Text";
+import { useEffect, useState } from "react";
 
 function Console() {
-  const [messages, setMessages] = createSignal<Array<{ createdAt: string, message: string }>>([]);
+  const [messages, setMessages] = useState<Array<{ createdAt: string; message: string }>>([]);
 
-  createEffect(() => {
+  useEffect(() => {
     const stompClient = Stomp.client("ws://192.168.0.91:10100/ws");
 
     stompClient.connect({}, () => {
@@ -18,29 +17,37 @@ function Console() {
     return () => {
       stompClient.disconnect();
     };
-  });
+  }, []);
 
   return (
-    <Flex sx={{ flexGrow: 1, maxHeight: "calc(100vh - 56px - 4rem)", overflow: "hidden" }}>
+    <Flex
+      sx={{
+        flexGrow: 1,
+        maxHeight: "calc(100vh - 56px - 4rem)",
+        overflow: "hidden",
+      }}
+    >
       <Flex
         as="pre"
         sx={{
-          backgroundColor: "black",
+          bgColor: "black",
           borderRadius: "10px",
           color: "white",
-          flexDirection: "column",
+          flexDir: "column",
           flexGrow: 1,
           fontSize: "0.875rem",
-          maxHeight: "100%",
-          minHeight: "100%",
+          maxH: "100%",
+          minH: "100%",
           overflowY: "scroll",
-          padding: "1rem",
+          p: 4,
         }}
       >
         <Text sx={{ animation: "slow-blink 1.25s step-end infinite" }}>_</Text>
-        <For each={messages().sort((a, b) => b.createdAt.localeCompare(a.createdAt))}>
-          {(message) => <Text>{`${message.createdAt}: ${message.message.trim()}`}</Text>}
-        </For>
+        {messages
+          .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+          .map((message) => (
+            <Text>{`${message.createdAt}: ${message.message.trim()}`}</Text>
+          ))}
       </Flex>
     </Flex>
   );

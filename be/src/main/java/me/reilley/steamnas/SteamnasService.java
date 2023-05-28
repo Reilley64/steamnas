@@ -1,6 +1,7 @@
 package me.reilley.steamnas;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import me.reilley.steamnas.models.App;
 import me.reilley.steamnas.models.AppRepository;
 import me.reilley.steamnas.models.WebSocketMessage;
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
+@Log4j2
 
 @Service
 public class SteamnasService {
@@ -40,7 +42,7 @@ public class SteamnasService {
                 while ((line = reader.readLine()) != null) {
                     WebSocketMessage message = new WebSocketMessage(LocalDateTime.now(), line);
                     simpleMessagingTemplate.convertAndSend("/topic/console", message);
-                    System.out.println(message);
+                    log.info(message.toString());
                 }
 
                 int exitCode = p.waitFor();
