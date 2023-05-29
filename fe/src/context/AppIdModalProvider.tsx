@@ -14,6 +14,7 @@ import {
 import {
   faBuilding,
   faCar,
+  faChessKnight,
   faComputer,
   faCouch,
   faDragon,
@@ -39,6 +40,7 @@ const genreMap = new Map([
   ["RPG", <FontAwesomeIcon icon={faDragon} fixedWidth />],
   ["Simulation", <FontAwesomeIcon icon={faComputer} fixedWidth />],
   ["Sports", <FontAwesomeIcon icon={faFootball} fixedWidth />],
+  ["Strategy", <FontAwesomeIcon icon={faChessKnight} fixedWidth />],
 ]);
 
 const context = createContext<[string | null, Dispatch<SetStateAction<string | null>>] | undefined>(undefined);
