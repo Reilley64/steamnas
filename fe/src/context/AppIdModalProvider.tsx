@@ -1,3 +1,5 @@
+import config from "../config.ts";
+import useQueryStorage from "../functions/useQueryStorage.ts";
 import AppType from "../types/AppType.ts";
 import {
   Button,
@@ -28,7 +30,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
-import { Dispatch, ReactNode, SetStateAction, cloneElement, createContext, useContext, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, cloneElement, createContext, useContext } from "react";
 
 const genreMap = new Map([
   ["Action", <FontAwesomeIcon icon={faGun} fixedWidth />],
@@ -50,20 +52,19 @@ function AppIdModalProvider(props: { children: ReactNode }) {
 
   const navigate = useNavigate();
 
-  const appIdState = useState<string | null>(null);
+  const appIdState = useQueryStorage<string | null>("appId", null);
 
   const [appId, setAppId] = appIdState;
 
   const getAppQuery = useQuery(
     ["getApp", appId],
-    async (): Promise<AppType> => (await fetch(`http://192.168.0.91:10100/app/${appId}`)).json(),
+    async (): Promise<AppType> => (await fetch(`http://${config.API_URL}/app/${appId}`)).json(),
     { enabled: !!appId, suspense: false },
   );
   const app = getAppQuery.data!;
 
   const installAppMutation = useMutation(
-    async (): Promise<AppType> =>
-      (await fetch(`http://192.168.0.91:10100/install/${appId}`, { method: "POST" })).json(),
+    async (): Promise<AppType> => (await fetch(`http://${config.API_URL}/install/${appId}`, { method: "POST" })).json(),
     {
       onSuccess: () => {
         setAppId(null);
@@ -97,7 +98,7 @@ function AppIdModalProvider(props: { children: ReactNode }) {
                   {app.name}
                 </Text>
 
-                <HStack spacing={4}>
+                <HStack spacing={3}>
                   {app.genres.map((genre) => cloneElement(genreMap.get(genre)!, { key: genre }))}
                 </HStack>
 

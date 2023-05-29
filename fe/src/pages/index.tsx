@@ -1,3 +1,4 @@
+import config from "../config.ts";
 import { useAppIdContext } from "../context/AppIdModalProvider.tsx";
 import AppType from "../types/AppType.ts";
 import { Card, CardBody, Image, SimpleGrid, Text } from "@chakra-ui/react";
@@ -8,7 +9,7 @@ function Home() {
 
   const getInstalledQuery = useQuery(
     ["getInstalled"],
-    async (): Promise<Array<AppType>> => (await fetch("http://192.168.0.91:10100/installed")).json(),
+    async (): Promise<Array<AppType>> => (await fetch(`http://${config.API_URL}/installed`)).json(),
   );
 
   return (

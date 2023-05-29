@@ -1,3 +1,4 @@
+import config from "../config.ts";
 import { Flex, Text } from "@chakra-ui/react";
 import { Stomp } from "@stomp/stompjs";
 import { useEffect, useState } from "react";
@@ -6,7 +7,7 @@ function Console() {
   const [messages, setMessages] = useState<Array<{ createdAt: string; message: string }>>([]);
 
   useEffect(() => {
-    const stompClient = Stomp.client("ws://192.168.0.91:10100/ws");
+    const stompClient = Stomp.client(`ws://${config.API_URL}/ws`);
 
     stompClient.connect({}, () => {
       stompClient.subscribe("/topic/console", (message) => {
