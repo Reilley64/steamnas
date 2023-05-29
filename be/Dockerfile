@@ -9,7 +9,7 @@ RUN gradle bootJar
 
 FROM steamcmd/steamcmd:ubuntu
 
-ENV DEBIAN_FRONTEND=noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/New_York
 
 RUN apt-get update -y && \

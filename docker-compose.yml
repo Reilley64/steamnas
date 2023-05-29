@@ -20,6 +20,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=$DATABASE_PASSWORD
       - STEAM_USERNAME=$STEAM_USERNAME
       - STEAM_PASSWORD=$STEAM_PASSWORD
+      - TZ=$TZ
     volumes:
       - $GAMES_ROOT:/root/Steam/steamapps
     depends_on:
