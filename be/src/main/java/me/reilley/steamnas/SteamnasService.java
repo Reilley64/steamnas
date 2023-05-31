@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -25,8 +27,30 @@ public class SteamnasService {
     private final AppRepository appRepository;
     private final SimpMessagingTemplate simpleMessagingTemplate;
 
+    private final Queue<Runnable> updateQueue = new LinkedList<>();
+
+    private void processQueue() {
+        Runnable task;
+        synchronized (updateQueue) {
+            task = updateQueue.peek();
+        }
+
+        if (task != null) {
+            taskExecutor.execute(() -> {
+                try {
+                    task.run();
+                } finally {
+                    synchronized (updateQueue) {
+                        updateQueue.remove();
+                        processQueue();
+                    }
+                }
+            });
+        }
+    }
+
     void update(App... apps) {
-        taskExecutor.execute(() -> {
+        Runnable task = () -> {
             ProcessBuilder pb = new ProcessBuilder(
                     "steamcmd",
                     "+@NoPromptForPassword 1",
@@ -56,7 +80,15 @@ public class SteamnasService {
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        });
+        };
+
+        synchronized (updateQueue) {
+            updateQueue.add(task);
+
+            if (updateQueue.size() == 1) {
+                processQueue();
+            }
+        }
     }
 
     void uninstall(App app) {
