@@ -58,13 +58,13 @@ function AppIdModalProvider(props: { children: ReactNode }) {
 
   const getAppQuery = useQuery(
     ["getApp", appId],
-    async (): Promise<AppType> => (await fetch(`http://${config.API_URL}/app/${appId}`)).json(),
+    async (): Promise<AppType> => (await fetch(`http://${config.API_URL}/apps/${appId}`)).json(),
     { enabled: !!appId, suspense: false },
   );
   const app = getAppQuery.data!;
 
   const installAppMutation = useMutation(
-    async (): Promise<AppType> => (await fetch(`http://${config.API_URL}/install/${appId}`, { method: "POST" })).json(),
+    async (): Promise<AppType> => (await fetch(`http://${config.API_URL}/apps/${appId}`, { method: "POST" })).json(),
     {
       onSuccess: () => {
         setAppId(null);

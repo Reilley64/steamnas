@@ -58,4 +58,36 @@ public class SteamnasService {
             }
         });
     }
+
+    void uninstall(App app) {
+        taskExecutor.execute(() -> {
+            if (appRepository.existsById(app.getId())) {
+                ProcessBuilder pb = new ProcessBuilder(
+                        "steamcmd",
+                        "+@NoPromptForPassword 1",
+                        "+@sSteamCmdForcePlatformType windows",
+                        String.format("+login %s %s", System.getenv("STEAM_USERNAME"), System.getenv("STEAM_PASSWORD")),
+                        String.format("+app_uninstall %s validate", app.getId()),
+                        "+quit"
+                );
+                try {
+                    Process p = pb.start();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        WebSocketMessage message = new WebSocketMessage(LocalDateTime.now(), line);
+                        simpleMessagingTemplate.convertAndSend("/topic/console", message);
+                        log.info(message.toString());
+                    }
+
+                    int exitCode = p.waitFor();
+                    if (exitCode == 0) {
+                        appRepository.delete(app);
+                    }
+                } catch (IOException | InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
 }

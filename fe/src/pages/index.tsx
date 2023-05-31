@@ -9,7 +9,7 @@ function Home() {
 
   const getInstalledQuery = useQuery(
     ["getInstalled"],
-    async (): Promise<Array<AppType>> => (await fetch(`http://${config.API_URL}/installed`)).json(),
+    async (): Promise<Array<AppType>> => (await fetch(`http://${config.API_URL}/apps`)).json(),
   );
 
   return (
