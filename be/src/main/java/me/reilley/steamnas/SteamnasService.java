@@ -55,8 +55,7 @@ public class SteamnasService {
                     "steamcmd",
                     "+@NoPromptForPassword 1",
                     String.format("+login %s %s", System.getenv("STEAM_USERNAME"), System.getenv("STEAM_PASSWORD")),
-                    "+quit",
-                    "-tcp"
+                    "+quit"
             );
 
             try {
@@ -84,8 +83,7 @@ public class SteamnasService {
                     "+@sSteamCmdForcePlatformType windows",
                     String.format("+login %s", System.getenv("STEAM_USERNAME")),
                     Arrays.stream(apps).map((app) -> String.format("+app_update %s validate", app.getId())).collect(Collectors.joining()),
-                    "+quit",
-                    "-tcp"
+                    "+quit"
             );
             try {
                 Process p = pb.start();
@@ -128,8 +126,7 @@ public class SteamnasService {
                         "+@sSteamCmdForcePlatformType windows",
                         String.format("+login %s", System.getenv("STEAM_USERNAME")),
                         String.format("+app_uninstall %s validate", app.getId()),
-                        "+quit",
-                        "-tcp"
+                        "+quit"
                 );
                 try {
                     Process p = pb.start();
