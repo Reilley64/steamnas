@@ -29,6 +29,33 @@ public class SteamnasService {
 
     private final Queue<Runnable> updateQueue = new LinkedList<>();
 
+    void login() {
+        taskExecutor.execute(() -> {
+            ProcessBuilder pb = new ProcessBuilder(
+                    "steamcmd",
+                    "+@NoPromptForPassword 1",
+                    String.format("+login %s %s", System.getenv("STEAM_USERNAME"), System.getenv("STEAM_PASSWORD")),
+                    "+quit",
+                    "-tcp"
+            );
+
+            try {
+                Process p = pb.start();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    WebSocketMessage message = new WebSocketMessage(LocalDateTime.now(), line);
+                    simpleMessagingTemplate.convertAndSend("/topic/console", message);
+                    log.info(message.toString());
+                }
+
+                p.waitFor();
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
     private void processQueue() {
         Runnable task;
         synchronized (updateQueue) {
@@ -55,9 +82,10 @@ public class SteamnasService {
                     "steamcmd",
                     "+@NoPromptForPassword 1",
                     "+@sSteamCmdForcePlatformType windows",
-                    String.format("+login %s %s", System.getenv("STEAM_USERNAME"), System.getenv("STEAM_PASSWORD")),
+                    String.format("+login %s", System.getenv("STEAM_USERNAME")),
                     Arrays.stream(apps).map((app) -> String.format("+app_update %s validate", app.getId())).collect(Collectors.joining()),
-                    "+quit"
+                    "+quit",
+                    "-tcp"
             );
             try {
                 Process p = pb.start();
@@ -98,9 +126,10 @@ public class SteamnasService {
                         "steamcmd",
                         "+@NoPromptForPassword 1",
                         "+@sSteamCmdForcePlatformType windows",
-                        String.format("+login %s %s", System.getenv("STEAM_USERNAME"), System.getenv("STEAM_PASSWORD")),
+                        String.format("+login %s", System.getenv("STEAM_USERNAME")),
                         String.format("+app_uninstall %s validate", app.getId()),
-                        "+quit"
+                        "+quit",
+                        "-tcp"
                 );
                 try {
                     Process p = pb.start();

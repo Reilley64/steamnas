@@ -7,7 +7,7 @@ const theme = extendTheme({
         solid: {
           bg: "rgb(39, 59, 75)",
 
-          "&:hover": {
+          _hover: {
             bg: "rgb(65, 122, 155)",
           },
         },
