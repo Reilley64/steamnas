@@ -29,6 +29,26 @@ public class SteamnasService {
 
     private final Queue<Runnable> updateQueue = new LinkedList<>();
 
+    private void processQueue() {
+        Runnable task;
+        synchronized (updateQueue) {
+            task = updateQueue.peek();
+        }
+
+        if (task != null) {
+            taskExecutor.execute(() -> {
+                try {
+                    task.run();
+                } finally {
+                    synchronized (updateQueue) {
+                        updateQueue.remove();
+                        processQueue();
+                    }
+                }
+            });
+        }
+    }
+
     void login() {
         taskExecutor.execute(() -> {
             ProcessBuilder pb = new ProcessBuilder(
@@ -54,26 +74,6 @@ public class SteamnasService {
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    private void processQueue() {
-        Runnable task;
-        synchronized (updateQueue) {
-            task = updateQueue.peek();
-        }
-
-        if (task != null) {
-            taskExecutor.execute(() -> {
-                try {
-                    task.run();
-                } finally {
-                    synchronized (updateQueue) {
-                        updateQueue.remove();
-                        processQueue();
-                    }
-                }
-            });
-        }
     }
 
     void update(App... apps) {
