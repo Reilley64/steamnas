@@ -1,4 +1,4 @@
-FROM gradle:8.1.1-jdk17-alpine AS build
+FROM gradle:8.1.1-jdk17 AS build
 WORKDIR /app
 
 COPY build.gradle settings.gradle ./
@@ -7,9 +7,10 @@ RUN gradle clean
 COPY . .
 RUN gradle bootJar
 
-FROM steamcmd/steamcmd:alpine
+FROM cm2network/steamcmd
 
-RUN apk add --no-cache libcurl openjdk17
+RUN apt update -y && apt upgrade -y
+RUN apt install -y openjdk-17-jdk
 
 WORKDIR /app
 
