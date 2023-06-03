@@ -21,7 +21,7 @@ services:
       - STEAM_USERNAME=$STEAM_USERNAME
       - STEAM_PASSWORD=$STEAM_PASSWORD
     volumes:
-      - $GAMES_ROOT:/root/Steam/steamapps
+      - $GAMES_ROOT:/home/steam/Steam/steamapps
     depends_on:
       - postgres
 

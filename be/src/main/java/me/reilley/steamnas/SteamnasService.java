@@ -52,7 +52,7 @@ public class SteamnasService {
     void login() {
         taskExecutor.execute(() -> {
             ProcessBuilder pb = new ProcessBuilder(
-                    "steamcmd",
+                    "/home/steam/steamcmd/steamcmd.sh",
                     "+@NoPromptForPassword 1",
                     String.format("+login %s %s", System.getenv("STEAM_USERNAME"), System.getenv("STEAM_PASSWORD")),
                     "+quit"
@@ -78,7 +78,7 @@ public class SteamnasService {
     void update(App... apps) {
         Runnable task = () -> {
             ProcessBuilder pb = new ProcessBuilder(
-                    "steamcmd",
+                    "/home/steam/steamcmd/steamcmd.sh",
                     "+@NoPromptForPassword 1",
                     "+@sSteamCmdForcePlatformType windows",
                     String.format("+login %s", System.getenv("STEAM_USERNAME")),
@@ -121,7 +121,7 @@ public class SteamnasService {
         taskExecutor.execute(() -> {
             if (appRepository.existsById(app.getId())) {
                 ProcessBuilder pb = new ProcessBuilder(
-                        "steamcmd",
+                        "/home/steam/steamcmd/steamcmd.sh",
                         "+@NoPromptForPassword 1",
                         "+@sSteamCmdForcePlatformType windows",
                         String.format("+login %s", System.getenv("STEAM_USERNAME")),
