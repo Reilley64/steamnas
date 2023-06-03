@@ -16,6 +16,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 USER ${USER}
+RUN echo 'alias steamcmd="/home/steam/steamcmd/steamcmd.sh"' >> ~/.bashrc
+
 WORKDIR /app
 
 COPY --from=build /app/build/libs/steamnas-0.0.1-SNAPSHOT.jar app.jar
