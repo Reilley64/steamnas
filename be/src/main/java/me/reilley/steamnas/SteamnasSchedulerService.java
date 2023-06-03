@@ -13,7 +13,7 @@ public class SteamnasSchedulerService {
     final SteamnasService steamnasService;
     final AppRepository appRepository;
 
-    @Scheduled(cron = "0 0 14 * * *")
+    @Scheduled(cron = "0 0 4 * * *", zone = "Australia/Melbourne")
     public void update() {
         steamnasService.update(appRepository.findAll().toArray(new App[0]));
     }

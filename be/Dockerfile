@@ -9,7 +9,7 @@ RUN gradle bootJar
 
 FROM steamcmd/steamcmd:alpine
 
-RUN apk add --no-cache openjdk17
+RUN apk add --no-cache libcurl openjdk17
 
 WORKDIR /app
 
