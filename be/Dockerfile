@@ -9,8 +9,10 @@ RUN gradle bootJar
 
 FROM cm2network/steamcmd
 
-RUN apt update -y && apt upgrade -y
-RUN apt install -y openjdk-17-jdk
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends --no-install-suggests openjdk-17-jdk \
+    && apt-get remove --purge --auto-remove -y \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
