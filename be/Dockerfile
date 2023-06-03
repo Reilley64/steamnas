@@ -9,11 +9,13 @@ RUN gradle bootJar
 
 FROM cm2network/steamcmd
 
+USER root
 RUN apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests openjdk-17-jdk \
     && apt-get remove --purge --auto-remove -y \
     && rm -rf /var/lib/apt/lists/*
 
+USER ${USER}
 WORKDIR /app
 
 COPY --from=build /app/build/libs/steamnas-0.0.1-SNAPSHOT.jar app.jar
