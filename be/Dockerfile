@@ -7,15 +7,14 @@ RUN gradle clean
 COPY . .
 RUN gradle bootJar
 
-FROM cm2network/steamcmd
+FROM alpine
 
-USER root
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends --no-install-suggests openjdk-17-jdk \
-    && apt-get remove --purge --auto-remove -y \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache bash curl libgcc openjdk17
 
-USER ${USER}
+RUN adduser -D steam
+USER steam
+WORKDIR /home/Steam
+RUN curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
 
 WORKDIR /app
 
