@@ -13,7 +13,7 @@ RUN apk add --no-cache bash curl libgcc openjdk17
 
 RUN adduser -D steam
 USER steam
-WORKDIR /home/Steam
+WORKDIR /home/steam/steamcmd
 RUN curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
 
 WORKDIR /app
