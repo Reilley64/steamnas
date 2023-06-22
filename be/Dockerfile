@@ -7,14 +7,14 @@ RUN gradle clean
 COPY . .
 RUN gradle bootJar
 
-FROM alpine
+FROM ghcr.io/graalvm/jdk:ol8-java17
 
-RUN apk add --no-cache bash curl libgcc openjdk17
+RUN microdnf install glibc-devel.i686 gzip libstdc++.i686 wget
 
-RUN adduser -D steam
+RUN useradd steam
 USER steam
 WORKDIR /home/steam/Steam
-RUN curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
+RUN wget "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
 
 WORKDIR /app
 
