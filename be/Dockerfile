@@ -14,7 +14,8 @@ RUN microdnf install glibc-devel.i686 gzip libstdc++.i686 wget
 RUN useradd steam
 USER steam
 WORKDIR /home/steam/Steam
-RUN wget "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
+RUN wget "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" && \
+    tar zxvf steamcmd_linux.tar.gz
 
 WORKDIR /app
 
